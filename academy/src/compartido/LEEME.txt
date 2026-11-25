@@ -1,0 +1,1 @@
+Copia de compartido/src (la pone compartido/sincronizar.mjs). No la edites aquí.

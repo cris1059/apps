@@ -1,0 +1,789 @@
+/* ============================================================
+   AvantCode Control · piel del sistema interno de AvantCode
+   (SISTEMAAVANTCODEV2): marco oscuro, lienzo claro redondeado con
+   luces ambientales, tarjetas de vidrio, botones píldora y acento
+   lima. Se aplica sobre los bloques .dm-* con la clase .dm--sistema
+   (no cambia la demo de planes). Incluye el tablero de actividades.
+   ============================================================ */
+
+.dm--sistema {
+  --s-marco: #0E0E0E;
+  --s-lima: #D4FF3F;
+  --s-ease: cubic-bezier(.22, .61, .36, 1);
+  --s-vidrio: linear-gradient(180deg, rgba(255, 255, 255, .74), rgba(255, 255, 255, .52));
+  --s-vidrio-sombra:
+    inset 0 1px 0 rgba(255, 255, 255, .9),
+    0 0 0 1px rgba(20, 20, 20, .045),
+    0 1px 2px rgba(20, 20, 20, .04),
+    0 16px 40px -16px rgba(20, 20, 20, .16);
+  --d-fondo: #F3F3F3;
+  --d-borde: rgba(20, 20, 20, .08);
+  --d-linea: rgba(20, 20, 20, .06);
+  --d-texto: #141414;
+  --d-texto-2: #464646;
+  --d-texto-3: #6B6B6B;
+  --d-acento: #161616;
+  --d-acento-suave: rgba(20, 20, 20, .06);
+  position: relative;
+  grid-template-columns: 264px minmax(0, 1fr);
+  background: var(--s-marco);
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+/* Luz tenue en el marco oscuro. */
+.dm--sistema::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(420px 320px at 0% 0%, color-mix(in srgb, var(--s-lima) 7%, transparent), transparent 70%),
+    radial-gradient(480px 380px at 0% 100%, rgba(167, 139, 250, .09), transparent 70%);
+}
+
+.dm--sistema ::selection {
+  background: var(--s-lima);
+  color: #161616;
+}
+
+/* ---------- Barra lateral oscura ---------- */
+
+.dm--sistema .dm-lateral {
+  z-index: 2;
+  gap: 18px;
+  padding: 20px 14px 14px;
+  border-right: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, .62);
+}
+
+.dm--sistema .dm-lateral :focus-visible {
+  outline-color: #FFFFFF;
+}
+
+.dm--sistema .dm-marca {
+  padding: 2px 10px 6px;
+}
+
+.dm--sistema .dm-marca-producto {
+  background: color-mix(in srgb, var(--s-lima) 15%, transparent);
+  color: var(--s-lima);
+}
+
+.dm--sistema .dm-nav {
+  gap: 2px;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.dm--sistema .dm-nav-item {
+  position: relative;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  color: rgba(255, 255, 255, .66);
+  font-size: 14.5px;
+  transition: background-color .2s var(--s-ease), color .2s var(--s-ease);
+}
+
+.dm--sistema .dm-nav-item:hover {
+  background: rgba(255, 255, 255, .06);
+  color: #FFFFFF;
+}
+
+.dm--sistema .dm-nav-item[aria-current="page"] {
+  background: linear-gradient(180deg, rgba(255, 255, 255, .16), rgba(255, 255, 255, .08));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .14), inset 0 0 0 1px rgba(255, 255, 255, .06);
+  color: #FFFFFF;
+  font-weight: 500;
+}
+
+.dm--sistema .dm-nav-item[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  right: 12px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--s-lima);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--s-lima) 80%, transparent);
+}
+
+/* Tarjeta del usuario: vidrio oscuro, como en el sistema. */
+.dm--sistema .dm-plan-chip {
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border: 1px solid rgba(255, 255, 255, .08);
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(34, 34, 34, .78), rgba(22, 22, 22, .72));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08), 0 20px 50px -20px rgba(0, 0, 0, .6);
+}
+
+.dm--sistema .dm-plan-chip > span:last-child {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.dm--sistema .dm-plan-chip strong {
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.dm--sistema .dm-plan-chip span span {
+  color: rgba(255, 255, 255, .5);
+  font-size: 12px;
+}
+
+.dm--sistema .dm-plan-chip .dm-avatar {
+  width: 38px;
+  height: 38px;
+  background: linear-gradient(145deg, #2A2A2A, #0D0D0D);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14);
+  color: var(--s-lima);
+}
+
+/* ---------- Lienzo claro redondeado, con luces ambientales ---------- */
+
+.dm--sistema .dm-principal {
+  position: relative;
+  isolation: isolate;
+  margin: 10px 10px 10px 0;
+  border-radius: 32px;
+  background: var(--d-fondo);
+  overflow: clip;
+}
+
+/* Cuadrícula fina: el desenfoque del vidrio la difumina. */
+.dm--sistema .dm-principal::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(20, 20, 20, .045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(20, 20, 20, .045) 1px, transparent 1px);
+  background-size: 44px 44px;
+  -webkit-mask-image: radial-gradient(120% 620px at 50% 0%, #000 30%, transparent 75%);
+  mask-image: radial-gradient(120% 620px at 50% 0%, #000 30%, transparent 75%);
+}
+
+.dm--sistema .dm-principal::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(520px 420px at 100% 0%, color-mix(in srgb, var(--s-lima) 34%, transparent), transparent 70%),
+    radial-gradient(520px 520px at 0% 420px, rgba(167, 139, 250, .22), transparent 70%),
+    radial-gradient(560px 460px at 82% 900px, rgba(20, 163, 148, .16), transparent 70%);
+}
+
+/* Barra superior de vidrio */
+.dm--sistema .dm-top {
+  padding: 16px clamp(16px, 3vw, 36px);
+  border-bottom: 0;
+  background: rgba(243, 243, 243, .62);
+  box-shadow: 0 1px 0 rgba(20, 20, 20, .06);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+}
+
+.dm--sistema .dm-top-titulo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.dm--sistema .dm-top h1 {
+  font-family: var(--ac-display);
+  font-size: clamp(1.85rem, 3.4vw, 2.6rem);
+  font-weight: 600;
+  letter-spacing: var(--ac-track-titulo);
+  line-height: 1.05;
+}
+
+/* Etiqueta tipo píldora con punto lima */
+.dm-top-etiqueta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px 5px 9px;
+  border: 1px solid rgba(255, 255, 255, .8);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .6);
+  box-shadow: 0 0 0 1px rgba(20, 20, 20, .04);
+  color: var(--d-texto-2);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.dm-top-etiqueta i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #161616;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--s-lima) 70%, transparent);
+}
+
+.dm--sistema .dm-select select {
+  height: 42px;
+  padding: 0 38px 0 16px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .7);
+  box-shadow: inset 0 0 0 1px rgba(20, 20, 20, .08), inset 0 1px 0 rgba(255, 255, 255, .9);
+  font-weight: 600;
+}
+
+.dm--sistema .dm-select svg {
+  right: 14px;
+}
+
+.dm--sistema .dm-contenido {
+  max-width: 1280px;
+  width: 100%;
+  margin-inline: auto;
+  padding: 20px clamp(16px, 3vw, 36px) 128px;
+}
+
+/* ---------- Tarjetas de vidrio ---------- */
+
+.dm--sistema .dm-caja,
+.dm--sistema .dm-kpi {
+  border: 1px solid rgba(255, 255, 255, .78);
+  border-radius: 24px;
+  background: var(--s-vidrio);
+  box-shadow: var(--s-vidrio-sombra);
+  -webkit-backdrop-filter: blur(22px) saturate(170%);
+  backdrop-filter: blur(22px) saturate(170%);
+}
+
+.dm--sistema .dm-caja {
+  padding: 22px 24px;
+}
+
+.dm--sistema .dm-caja-enc h2 {
+  font-family: var(--ac-display);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: var(--ac-track-texto);
+}
+
+/* Indicadores: el primero va en oscuro, como el KPI destacado del sistema. */
+.dm--sistema .dm-kpi {
+  gap: 10px;
+  padding: 20px 22px;
+  transition: transform .3s var(--s-ease);
+}
+
+.dm--sistema .dm-kpi:hover {
+  transform: translateY(-2px);
+}
+
+.dm--sistema .dm-kpi-etq {
+  font-weight: 500;
+}
+
+.dm--sistema .dm-kpi-valor {
+  font-size: clamp(1.6rem, 2.4vw, 2rem);
+  font-weight: 600;
+  letter-spacing: var(--ac-track-subtitulo);
+  line-height: 1.05;
+}
+
+.dm--sistema .dm-kpis > .dm-kpi:first-child {
+  border-color: transparent;
+  background:
+    radial-gradient(120% 90% at 100% 0%, color-mix(in srgb, var(--s-lima) 22%, transparent), transparent 55%),
+    radial-gradient(90% 80% at 0% 100%, rgba(167, 139, 250, .22), transparent 60%),
+    linear-gradient(160deg, #222, #0E0E0E);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .1), 0 20px 40px -20px rgba(0, 0, 0, .55);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.dm--sistema .dm-kpis > .dm-kpi:first-child .dm-kpi-etq,
+.dm--sistema .dm-kpis > .dm-kpi:first-child .dm-kpi-delta {
+  color: rgba(255, 255, 255, .62);
+}
+
+.dm--sistema .dm-kpis > .dm-kpi:first-child .dm-kpi-valor {
+  color: #FFFFFF;
+}
+
+/* ---------- Botones píldora ---------- */
+
+.dm--sistema .dm-btn {
+  height: 38px;
+  padding: 0 16px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .7);
+  box-shadow: inset 0 0 0 1px rgba(20, 20, 20, .08), inset 0 1px 0 rgba(255, 255, 255, .9);
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: var(--ac-track-chico);
+  transition: background-color .2s var(--s-ease), transform .2s var(--s-ease);
+}
+
+.dm--sistema .dm-btn:hover {
+  background: #FFFFFF;
+}
+
+.dm--sistema .dm-btn:active {
+  transform: scale(.98);
+}
+
+.dm--sistema .dm-btn--acento {
+  background: #161616;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .14), 0 6px 16px -6px rgba(0, 0, 0, .45);
+  color: #FFFFFF;
+}
+
+.dm--sistema .dm-btn--acento:hover {
+  background: #000000;
+  filter: none;
+}
+
+.dm--sistema .dm-reloj-botones .dm-btn {
+  height: 50px;
+  padding: 0 24px;
+  font-size: 15.5px;
+}
+
+.dm--sistema .dm-buscar {
+  height: 38px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .7);
+  box-shadow: inset 0 0 0 1px rgba(20, 20, 20, .08);
+}
+
+/* ---------- Insignias de estado (colores del sistema) ---------- */
+
+.dm--sistema .dm-estado {
+  padding: 4px 10px;
+}
+
+.dm--sistema .dm-estado--ok { background: #E4F4EF; color: #0B655D; }
+.dm--sistema .dm-estado--aviso { background: #FFF1D2; color: #8A5A00; }
+.dm--sistema .dm-estado--alerta { background: #FDE8E7; color: #B3261E; }
+.dm--sistema .dm-estado--info { background: #EFEAFE; color: #5B32D6; }
+.dm--sistema .dm-estado--neutro { background: rgba(20, 20, 20, .06); color: #464646; }
+
+/* ---------- Tablas ---------- */
+
+.dm--sistema .dm-tabla-marco {
+  margin: 0 -24px;
+  padding: 0 24px;
+}
+
+.dm--sistema .dm-tabla {
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 14px;
+}
+
+.dm--sistema .dm-tabla th {
+  padding: 10px 14px;
+  border-bottom-color: rgba(20, 20, 20, .07);
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+
+.dm--sistema .dm-tabla td {
+  padding: 14px;
+  border-bottom-color: rgba(20, 20, 20, .05);
+}
+
+.dm--sistema .dm-tabla tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.dm--sistema .dm-tabla tbody tr:hover td {
+  background: rgba(255, 255, 255, .65);
+}
+
+.dm--sistema .dm-tabla tbody tr:hover td:first-child {
+  border-radius: 12px 0 0 12px;
+}
+
+.dm--sistema .dm-tabla tbody tr:hover td:last-child {
+  border-radius: 0 12px 12px 0;
+}
+
+.dm--sistema .dm-tabla th:first-child,
+.dm--sistema .dm-tabla td:first-child {
+  padding-left: 14px;
+}
+
+/* ---------- Otras piezas ---------- */
+
+.dm--sistema .dm-reloj-hora {
+  font-family: var(--ac-display);
+  font-weight: 600;
+  letter-spacing: var(--ac-track-titulo);
+}
+
+.dm--sistema .dm-integracion,
+.dm--sistema .dm-tarjeta {
+  border-color: transparent;
+  border-radius: 16px;
+  background: rgba(20, 20, 20, .035);
+}
+
+.dm--sistema .dm-barras-pista {
+  border-radius: 999px;
+  background: rgba(20, 20, 20, .06);
+}
+
+.dm--sistema .dm-barras-barra,
+.dm--sistema .dm-col-barra {
+  border-radius: 8px;
+}
+
+.dm--sistema .dm-toast {
+  padding: 12px 18px;
+  border: 1px solid rgba(255, 255, 255, .08);
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(34, 34, 34, .92), rgba(22, 22, 22, .9));
+  -webkit-backdrop-filter: blur(22px);
+  backdrop-filter: blur(22px);
+}
+
+/* ---------- Actividades ---------- */
+
+.dm-act {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dm-act-form {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px 14px;
+  margin-bottom: 18px;
+  padding: 16px;
+  border-radius: 16px;
+  background: rgba(20, 20, 20, .035);
+}
+
+.dm-act-campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.dm-act-campo--ancho {
+  grid-column: 1 / -1;
+}
+
+.dm-act-campo label {
+  color: var(--d-texto-2);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.dm-act-campo :is(input, select),
+.dm-act-estado {
+  width: 100%;
+  min-height: 42px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 14px;
+  background: #FFFFFF;
+  box-shadow: inset 0 0 0 1px rgba(20, 20, 20, .1);
+  color: var(--d-texto);
+  font: 500 14px var(--ac-sans);
+}
+
+.dm-act-campo :is(input, select):focus,
+.dm-act-estado:focus {
+  outline: none;
+  box-shadow: inset 0 0 0 1.5px #161616, 0 0 0 3px rgba(20, 20, 20, .08);
+}
+
+.dm-act-form-botones {
+  display: flex;
+  grid-column: 1 / -1;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.dm-act-tablero {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: start;
+  gap: 12px;
+}
+
+.dm-act-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  padding: 12px;
+  border-radius: 20px;
+  background: rgba(20, 20, 20, .035);
+}
+
+.dm-act-col h3 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin: 0;
+  font-size: 13px;
+}
+
+.dm-act-col h3 > span:last-child {
+  color: var(--d-texto-3);
+  font-weight: 600;
+}
+
+.dm-act-vacia {
+  margin: 0;
+  padding: 18px 0;
+  color: var(--d-texto-3);
+  font-size: 13px;
+  text-align: center;
+}
+
+.dm-act-tarjeta {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px;
+  border-radius: 16px;
+  background: #FFFFFF;
+  box-shadow: 0 0 0 1px rgba(20, 20, 20, .05), 0 6px 16px -10px rgba(20, 20, 20, .25);
+}
+
+.dm-act-tarjeta > strong {
+  font-size: 14.5px;
+  font-weight: 600;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.dm-act-tarjeta-enc,
+.dm-act-pie {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px 8px;
+}
+
+.dm-act-prioridad {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(20, 20, 20, .05);
+  color: var(--d-texto-2);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.dm-act-prioridad--urgente {
+  background: #FDE8E7;
+  color: #B3261E;
+}
+
+.dm-act-barras {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 10px;
+}
+
+.dm-act-barras i {
+  width: 3px;
+  border-radius: 1px;
+  background: currentColor;
+}
+
+.dm-act-barras i.apagada {
+  opacity: .2;
+}
+
+.dm-act-persona {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  color: var(--d-texto-2);
+  font-size: 12.5px;
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+.dm-act-persona small {
+  display: block;
+  color: var(--d-texto-3);
+  font-size: 11.5px;
+  font-weight: 400;
+}
+
+.dm-act-avatar {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #161616;
+  color: #FFFFFF;
+  font-size: 10px;
+  font-weight: 650;
+}
+
+.dm-act-limite {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--d-texto-3);
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.dm-act-estado {
+  min-height: 36px;
+  border-radius: 12px;
+  font-size: 13px;
+}
+
+/* ---------- Responsivo ---------- */
+
+@media (max-width: 1100px) {
+  .dm-act-tablero {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 960px) {
+  .dm--sistema {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* El menú pasa arriba, en una fila que se desliza, sobre el marco oscuro. */
+  .dm--sistema .dm-lateral {
+    position: static;
+    padding: 12px 12px 0;
+    background: var(--s-marco);
+  }
+
+  .dm--sistema .dm-nav {
+    overflow-x: auto;
+    padding-bottom: 10px;
+  }
+
+  .dm--sistema .dm-nav-item[aria-current="page"]::after {
+    position: static;
+    margin-left: 2px;
+  }
+
+  .dm--sistema .dm-plan-chip {
+    display: none;
+  }
+
+  .dm--sistema .dm-principal {
+    margin: 0;
+    border-radius: 24px 24px 0 0;
+  }
+
+  .dm--sistema .dm-contenido {
+    padding: 16px 16px 150px;
+  }
+}
+
+@media (max-width: 600px) {
+  .dm--sistema .dm-caja {
+    padding: 18px 16px;
+    border-radius: 20px;
+  }
+
+  .dm--sistema .dm-kpi {
+    padding: 16px;
+    border-radius: 20px;
+  }
+
+  .dm--sistema .dm-tabla-marco {
+    margin: 0 -16px;
+    padding: 0 16px;
+  }
+
+  .dm-act-form,
+  .dm-act-tablero {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .dm-act-form-botones .dm-btn {
+    flex: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dm--sistema .dm-kpi,
+  .dm--sistema .dm-btn {
+    transition: none;
+  }
+
+  .dm--sistema .dm-kpi:hover {
+    transform: none;
+  }
+}
+
+/* ---------- Marca del cliente (personalización del configurador) ---------- */
+
+.dm--sistema .dm-marca--propia {
+  gap: 10px;
+  min-width: 0;
+  color: #FFFFFF;
+}
+
+.dm-marca--propia img {
+  flex: none;
+  width: 30px;
+  height: 30px;
+  padding: 2px;
+  border-radius: 8px;
+  background: #FFFFFF;
+  object-fit: contain;
+}
+
+.dm-marca-inicial {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: var(--s-lima);
+  color: #161616;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.dm-marca--propia strong {
+  overflow: hidden;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: var(--ac-track-texto);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

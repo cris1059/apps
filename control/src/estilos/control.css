@@ -1,0 +1,310 @@
+/* ============================================================
+   Lo propio de AvantCode Control, encima de la base del sistema
+   (sistema.css): etiqueta "Control" de la marca y avisos de error.
+   ============================================================ */
+
+/* "Control" junto al logo, como en la demo del sitio. */
+.marca-producto {
+  margin-left: 2px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: var(--ac-lima);
+  color: var(--ac-negro);
+  font: 700 11px/1.4 var(--ac-sans);
+  letter-spacing: 0;
+}
+
+/* Error del inicio de sesión (datos incorrectos, empresa suspendida…). */
+.ctl-aviso {
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: #fdecea;
+  color: #b42318;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+/* Mientras se revisa si la plataforma está abierta. */
+.cargando {
+  min-height: 100vh;
+  background: var(--ac-gris-100);
+}
+
+/* Confirmaciones (alta enviada, contraseña cambiada…). */
+.ctl-ok {
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: #e6f5f2;
+  color: #0b655d;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+/* Aviso que no es error (por ejemplo, el correo no salió pero el alta sí). */
+.ctl-aviso--suave {
+  background: #fff6e0;
+  color: #8a5a00;
+}
+
+/* Opciones del menú de cada persona. */
+.ctl-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 9px 12px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--ac-texto);
+  font: 500 14px var(--ac-sans);
+  text-align: left;
+  cursor: pointer;
+}
+
+.ctl-menu-item:hover {
+  background: rgba(20, 20, 20, 0.05);
+}
+
+/* ---------- Registro de jornada (paginas/jornada) ---------- */
+
+/* Marcar: reloj grande, estado y botones. */
+.jr-marcar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+}
+
+.jr-reloj {
+  margin: 4px 0 0;
+  color: var(--ac-texto);
+  font-family: var(--ac-display, inherit);
+  font-size: clamp(3rem, 12vw, 5.2rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.jr-estado {
+  margin: 0;
+  color: var(--ac-texto-2);
+  font-size: 1.05rem;
+}
+
+.jr-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 560px;
+}
+
+.jr-boton {
+  flex: 1 1 220px;
+  justify-content: center;
+  min-height: 58px;
+  border-radius: 999px;
+  font-size: 1.05rem;
+}
+
+.jr-datos {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 18px;
+  margin-top: 4px;
+  color: var(--ac-texto-3);
+  font-size: 13.5px;
+}
+
+.jr-datos span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.jr-marcar .ctl-aviso,
+.jr-marcar .ctl-ok {
+  width: 100%;
+  max-width: 560px;
+  text-align: left;
+}
+
+/* Línea de registros de un día. */
+.jr-linea {
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.jr-linea li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 14px;
+  padding: 10px 0;
+  border-top: 1px solid rgba(20, 20, 20, 0.06);
+}
+
+.jr-linea li:first-child {
+  border-top: 0;
+}
+
+.jr-linea b {
+  min-width: 48px;
+  color: var(--ac-texto);
+  font-variant-numeric: tabular-nums;
+}
+
+.jr-linea li > span:nth-child(2) {
+  flex: 1;
+  min-width: 140px;
+  color: var(--ac-texto);
+  font-size: 14.5px;
+}
+
+.jr-linea small {
+  display: block;
+  color: var(--ac-texto-3);
+  font-size: 12.5px;
+}
+
+/* Mapa (Google Maps u OpenStreetMap): geocercas y marcajes. */
+.mapa {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: 18px;
+  border: 1px solid rgba(20, 20, 20, 0.08);
+  background: #eef0f2;
+}
+
+.mapa-lienzo {
+  width: 100%;
+  height: 100%;
+}
+
+.mapa-cargando {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  grid-auto-flow: column;
+  gap: 8px;
+  color: var(--ac-texto-3);
+  font-size: 14px;
+  pointer-events: none;
+}
+
+.mapa .leaflet-container {
+  font-family: inherit;
+}
+
+/* Leyenda del mapa. */
+.mapa-leyenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin-top: 10px;
+  color: var(--ac-texto-3);
+  font-size: 12.5px;
+}
+
+.mapa-leyenda span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mapa-leyenda i {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  border: 2px solid currentColor;
+}
+
+/* Tabla de la ley (horas por semana, 2026–2030). */
+.ley-actual {
+  background: rgba(212, 255, 63, 0.22);
+  font-weight: 600;
+}
+
+/* Guardar en PDF (imprimir): solo el contenido, sin menú, barra ni botones. */
+@media print {
+  html,
+  body,
+  #root,
+  .app,
+  .app-lienzo,
+  .app-scroll {
+    height: auto !important;
+    overflow: visible !important;
+    background: #fff !important;
+  }
+  .app {
+    display: block !important;
+    padding: 0 !important;
+  }
+  .app::before,
+  .ambiente,
+  .lateral,
+  .barra,
+  .cajon,
+  .cajon-fondo,
+  .no-imprimir,
+  .pagina-cabecera button,
+  .segmentado,
+  input[type="date"] {
+    display: none !important;
+  }
+  .app-lienzo {
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+  .card {
+    box-shadow: none !important;
+    break-inside: avoid;
+    border: 1px solid #e5e5e5;
+  }
+}
+
+/* Aviso de la prueba gratis (arriba del contenido del panel). */
+.ctl-prueba {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 16px;
+  margin: 0 24px 4px;
+  padding: 12px 16px;
+  border-radius: 16px;
+  background: #eef4ff;
+  color: #1e3a8a;
+  font-size: 14px;
+  line-height: 1.45;
+}
+.ctl-prueba--pronto {
+  background: #fff4e5;
+  color: #8a4b00;
+}
+.ctl-prueba-boton {
+  flex-shrink: 0;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: #111;
+  color: #fff;
+  font-weight: 600;
+  font-size: 13px;
+  text-decoration: none;
+}
+@media (max-width: 720px) {
+  .ctl-prueba {
+    margin: 0 14px 4px;
+  }
+}

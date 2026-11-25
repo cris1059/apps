@@ -1,0 +1,3 @@
+Frontend copiado de ../academy-avantcode/frontend
+Commit: c326758 feat(apps): la API acepta las apps móviles (https://localhost en Android, capacitor://localhost en iOS)
+Fecha: 2026-11-25T02:53:12.462Z

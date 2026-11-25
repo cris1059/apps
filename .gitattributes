@@ -1,0 +1,4 @@
+# Scripts de Gradle: LF para Mac/Linux y CRLF para Windows.
+**/gradlew text eol=lf
+*.bat text eol=crlf
+*.sh text eol=lf

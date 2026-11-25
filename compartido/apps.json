@@ -1,0 +1,37 @@
+{
+  "capacitor": {
+    "@capacitor/core": "^8.6.2",
+    "@capacitor/app": "^8.0.0",
+    "@capacitor/browser": "^8.0.0",
+    "@capacitor/splash-screen": "^8.0.0",
+    "@capacitor/status-bar": "^8.0.0"
+  },
+  "capacitorDev": {
+    "@capacitor/cli": "^8.6.2",
+    "@capacitor/android": "^8.6.2",
+    "@capacitor/ios": "^8.6.2"
+  },
+  "apps": {
+    "academy": {
+      "nombre": "AvantCode Academy",
+      "origen": "../academy-avantcode/frontend",
+      "web": "https://academy.avantcode.mx",
+      "api": "https://api-academy.avantcode.mx",
+      "env": {
+        "VITE_API_URL": "https://api-academy.avantcode.mx/api"
+      },
+      "permisos": []
+    },
+    "control": {
+      "nombre": "AvantCode Control",
+      "origen": "../control-avantcode/frontend",
+      "web": "https://control.avantcode.mx",
+      "api": "https://control.avantcode.mx",
+      "env": {},
+      "permisos": [
+        "ubicacion",
+        "camara"
+      ]
+    }
+  }
+}

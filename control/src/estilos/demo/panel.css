@@ -1,0 +1,284 @@
+/*
+  El panel de AvantCode Control con el mismo marco de la demo de
+  avantcode.mx (/demo/control). Los estilos de la demo se copiaron tal
+  cual (demo-sistema.css, control-sistema.css y control-ley.css); aquí van
+  los tokens del sitio que usan y lo propio del panel real.
+*/
+
+.dm {
+  /* Tipografía tipo Apple, igual que el sitio. */
+  --ac-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --ac-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --ac-track-titulo: -0.02em;
+  --ac-track-subtitulo: -0.015em;
+  --ac-track-texto: -0.01em;
+  --ac-track-chico: -0.005em;
+  --d-acento: #161616;
+  --d-acento-suave: #ededed;
+}
+
+/* El menú usa enlaces (en la demo son botones). */
+a.dm-nav-item {
+  text-decoration: none;
+}
+
+/* Salir, junto a la persona que entró. */
+.dm-plan-chip {
+  position: relative;
+}
+.dm-plan-salir {
+  margin-left: auto;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.55);
+  cursor: pointer;
+}
+.dm-plan-salir:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+.dm-plan-chip a {
+  display: flex;
+  align-items: center;
+  gap: inherit;
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Pantallas que aún traen su propio encabezado: el título ya está arriba, en el marco. */
+.dm-contenido > .pagina {
+  grid-column: 1 / -1;
+}
+.dm-contenido .pagina-cabecera .etiqueta,
+.dm-contenido .pagina-cabecera .pagina-titulo {
+  display: none;
+}
+
+/* Campana en la barra de arriba. */
+.dm-top-controles .btn-icono {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--d-borde);
+  border-radius: 999px;
+}
+
+/* Tabla de entradas y salidas: hora grande y su detalle debajo. */
+.dm-hora {
+  display: block;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.dm-hora-sub {
+  display: block;
+  color: var(--d-texto-3);
+  font-size: 12px;
+}
+.dm-filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.dm-filtros input[type="date"],
+.dm-filtros select {
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid var(--d-borde);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--d-texto);
+  font: inherit;
+  font-size: 13px;
+}
+
+/* Mapa real dentro del bloque de la demo. */
+.dl-mapa-lienzo .mapa {
+  border-radius: 18px;
+}
+
+/* Nombre y rol en dos líneas (como en la demo). */
+.dm-plan-chip a > span:last-child {
+  display: grid;
+  min-width: 0;
+  line-height: 1.3;
+}
+.dm-plan-chip a > span:last-child > strong,
+.dm-plan-chip a > span:last-child > span {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Imprimir o «Guardar en PDF»: solo el contenido. */
+@media print {
+  .dm {
+    display: block !important;
+    min-height: 0 !important;
+  }
+  .dm-lateral,
+  .dm-top-controles,
+  .dm-tabla-acciones,
+  .dm-filtros {
+    display: none !important;
+  }
+  .dm-principal {
+    overflow: visible !important;
+    height: auto !important;
+  }
+}
+
+/* ---------- Se siente como app en el celular ---------- */
+
+html,
+body {
+  /* Sin rebote ni «jalar para recargar»; sin zoom por doble toque (el mapa maneja sus propios gestos). */
+  overscroll-behavior: none;
+  touch-action: manipulation;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+.dm button,
+.dm a,
+.dm [role="button"],
+.dm label {
+  -webkit-tap-highlight-color: transparent;
+}
+.dm-lateral,
+.dm-barra-movil,
+.dm-nav,
+.dm button {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* Barra de arriba del celular: menú, marca y avisos. Solo en pantallas chicas. */
+.dm-barra-movil {
+  display: none;
+}
+
+@media (max-width: 960px) {
+  /* En el celular los campos van a 16 px: así el teléfono no hace zoom al escribir. */
+  .dm input,
+  .dm select,
+  .dm textarea,
+  .input-field {
+    font-size: 16px !important;
+  }
+
+  .dm-barra-movil {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: calc(10px + env(safe-area-inset-top)) 14px 10px;
+    background: var(--s-marco, #0e0e0e);
+    color: #fff;
+  }
+  .dm-barra-movil .marca {
+    margin-right: auto;
+  }
+  .dm-hamburguesa {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border: 0;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    cursor: pointer;
+  }
+  .dm-hamburguesa:active {
+    transform: scale(0.96);
+  }
+  .dm-barra-movil .btn-icono {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
+    border: 0;
+  }
+
+  /* El menú lateral se vuelve un cajón que sale de la izquierda (en vez de la fila de la demo). */
+  .dm--panel .dm-lateral {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 60;
+    width: min(84vw, 310px);
+    height: 100dvh;
+    padding: calc(16px + env(safe-area-inset-top)) 14px calc(16px + env(safe-area-inset-bottom));
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: var(--s-marco, #0e0e0e);
+    border: 0;
+    box-shadow: 24px 0 60px rgba(0, 0, 0, 0.35);
+    transform: translateX(-104%);
+    transition: transform 0.32s cubic-bezier(0.32, 0.72, 0, 1);
+    will-change: transform;
+  }
+  .dm--panel.dm--menu-abierto .dm-lateral {
+    transform: translateX(0);
+  }
+  .dm--panel .dm-nav {
+    flex: 1;
+    flex-direction: column;
+    gap: 2px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding-bottom: 0;
+    -webkit-overflow-scrolling: touch;
+  }
+  .dm--panel .dm-nav-item {
+    white-space: normal;
+    min-height: 46px;
+  }
+  .dm--panel .dm-plan-chip {
+    display: flex;
+  }
+  .dm--panel .dm-marca {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .dm-velo {
+    position: fixed;
+    inset: 0;
+    z-index: 55;
+    background: rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.32s ease;
+  }
+  .dm--menu-abierto .dm-velo {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* El título de la sección queda en el lienzo; la campana pasa a la barra. */
+  .dm--panel .dm-top-controles {
+    display: none;
+  }
+  .dm--panel .dm-principal {
+    min-height: calc(100dvh - 62px);
+  }
+  .dm--panel .dm-contenido {
+    padding-bottom: calc(40px + env(safe-area-inset-bottom));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dm--panel .dm-lateral,
+  .dm-velo {
+    transition: none;
+  }
+}

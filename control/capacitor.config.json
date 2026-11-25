@@ -1,0 +1,9 @@
+{
+  "appId": "mx.avantcode.control",
+  "appName": "AvantCode Control",
+  "webDir": "dist",
+  "server": { "androidScheme": "https" },
+  "plugins": {
+    "SplashScreen": { "launchShowDuration": 1200, "launchAutoHide": true, "backgroundColor": "#0E0E0E", "showSpinner": false }
+  }
+}

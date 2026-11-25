@@ -1,0 +1,1749 @@
+/* ============================================================
+   AvantCode Control · bloques laborales (bloquesLey.jsx), menú por
+   grupos y color de acento más visible. Prefijo dl- para los
+   bloques. Se apoya en la piel .dm--sistema (control-sistema.css)
+   y en la ventana .lc-* (ventana-control.css).
+   ============================================================ */
+
+.dm--sistema {
+  --s-lima-texto: #161616;
+}
+
+/* Cada bloque mide su propio ancho: así los bloques se acomodan igual en la
+   demo completa que en la ventana angosta del configurador. */
+.dm--sistema .dm-bloque {
+  container-type: inline-size;
+}
+
+/* ---------- Menú por grupos ---------- */
+
+.dm-nav-grupo {
+  display: block;
+  margin: 16px 12px 4px;
+  color: rgba(255, 255, 255, .36);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.dm-nav-grupo:first-child {
+  margin-top: 0;
+}
+
+.lc-nav-grupo {
+  display: block;
+  padding: 12px 12px 4px;
+  color: rgba(255, 255, 255, .36);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.lc-nav-grupo:first-child {
+  padding-top: 0;
+}
+
+/* La barra lateral no estira la ventana: toma el alto del lienzo y su menú se desliza. */
+.lc-lateral {
+  contain: size;
+}
+
+.lc-nav {
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.lc-nav::-webkit-scrollbar {
+  display: none;
+}
+
+/* Contraída o angosta: el grupo se vuelve una línea fina. */
+.lc-app--contraida .lc-nav-grupo {
+  padding: 8px 10px 4px;
+}
+
+.lc-app--contraida .lc-nav-grupo span {
+  display: none;
+}
+
+.lc-app--contraida .lc-nav-grupo::before {
+  content: "";
+  display: block;
+  height: 1px;
+  background: rgba(255, 255, 255, .12);
+}
+
+/* Sección activa con el color de acento (el de AvantCode o el de la marca del cliente). */
+.lc-nav-item[aria-current="page"] {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--lc-lima) 26%, rgba(255, 255, 255, .08)), color-mix(in srgb, var(--lc-lima) 14%, rgba(255, 255, 255, .04)));
+}
+
+.lc-nav-item[aria-current="page"] svg {
+  color: var(--lc-lima);
+}
+
+.dm--sistema .dm-nav-item[aria-current="page"] {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--s-lima) 26%, rgba(255, 255, 255, .08)), color-mix(in srgb, var(--s-lima) 14%, rgba(255, 255, 255, .04)));
+}
+
+.dm--sistema .dm-nav-item[aria-current="page"] svg {
+  color: var(--s-lima);
+}
+
+/* Sección recién agregada desde el configurador: se ilumina un momento. */
+.lc-nav-item--nueva {
+  animation: lc-nueva 1.8s var(--ac-ease) both;
+}
+
+@keyframes lc-nueva {
+  0%,
+  35% {
+    background: color-mix(in srgb, var(--lc-lima) 55%, transparent);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--lc-lima) 70%, transparent);
+    color: #FFFFFF;
+  }
+
+  70% {
+    box-shadow: 0 0 0 8px transparent;
+  }
+}
+
+/* ---------- Acento visible en el lienzo ---------- */
+
+.dm--sistema .dm-btn--acento {
+  background: var(--s-lima);
+  box-shadow: inset 0 0 0 1px rgba(20, 20, 20, .08), 0 8px 18px -10px color-mix(in srgb, var(--s-lima) 85%, #000);
+  color: var(--s-lima-texto);
+}
+
+.dm--sistema .dm-btn--acento:hover {
+  background: color-mix(in srgb, var(--s-lima) 86%, #000);
+}
+
+/* La barra más alta de cada gráfica va con el acento. */
+.dm--sistema .dm-col-barra:has(.dm-col-valor),
+.dm--sistema .dm-barras li:first-child .dm-barras-barra {
+  background: var(--s-lima);
+  box-shadow: inset 0 0 0 1px rgba(20, 20, 20, .14);
+}
+
+.dm--sistema .dm-pos-cats button[aria-pressed="true"],
+.dm--sistema .dm-pos-metodo button[aria-pressed="true"] {
+  box-shadow: inset 0 -2px 0 var(--s-lima);
+}
+
+/* ---------- Piezas comunes ---------- */
+
+.dl-fundamento {
+  margin: 14px 0 0;
+  color: var(--d-texto-3);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.dl-fundamento svg {
+  margin-right: 3px;
+  vertical-align: -2px;
+}
+
+.dl-anios {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 999px;
+  background: rgba(20, 20, 20, .055);
+}
+
+.dl-anios button {
+  height: 30px;
+  padding: 0 11px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--d-texto-2);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color .2s var(--s-ease), color .2s var(--s-ease);
+}
+
+.dl-anios button:hover {
+  color: var(--d-texto);
+}
+
+.dl-anios button[aria-checked="true"] {
+  background: #161616;
+  color: var(--s-lima);
+}
+
+.dl-switch {
+  position: relative;
+  flex: none;
+  width: 44px;
+  height: 26px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(20, 20, 20, .18);
+  cursor: pointer;
+  transition: background-color .2s var(--s-ease);
+}
+
+.dl-switch span {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, .25);
+  transition: transform .2s var(--s-ease), background-color .2s var(--s-ease);
+}
+
+.dl-switch[aria-checked="true"] {
+  background: #161616;
+}
+
+.dl-switch[aria-checked="true"] span {
+  background: var(--s-lima);
+  transform: translateX(18px);
+}
+
+.dl-cal-texto,
+.dl-cumple-texto {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.dl-cal-texto strong,
+.dl-cumple-texto strong {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.dl-cal-texto small,
+.dl-cumple-texto small {
+  color: var(--d-texto-3);
+  font-size: 12.5px;
+  line-height: 1.4;
+}
+
+.dl-mapa-icono {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  background: #161616;
+  color: var(--s-lima);
+}
+
+/* ---------- Calculadora ---------- */
+
+.dl-calc-cuerpo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.dl-calc-datos {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dl-campo,
+.dl-paso {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.dl-campo label,
+.dl-paso label {
+  color: var(--d-texto-2);
+  font-size: 13.5px;
+  font-weight: 500;
+}
+
+.dl-pesos {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  height: 40px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: #FFFFFF;
+  box-shadow: inset 0 0 0 1px rgba(20, 20, 20, .1);
+  font-weight: 600;
+}
+
+.dl-pesos input {
+  width: 84px;
+  border: 0;
+  background: transparent;
+  color: var(--d-texto);
+  font: 600 15px var(--ac-sans);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  outline: none;
+  -moz-appearance: textfield;
+}
+
+.dl-pesos:focus-within,
+.dl-paso-control:focus-within {
+  box-shadow: inset 0 0 0 1.5px #161616;
+}
+
+.dl-paso-control {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 999px;
+  background: #FFFFFF;
+  box-shadow: inset 0 0 0 1px rgba(20, 20, 20, .1);
+}
+
+.dl-paso-control button {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(20, 20, 20, .05);
+  cursor: pointer;
+}
+
+.dl-paso-control button:hover:not(:disabled) {
+  background: rgba(20, 20, 20, .1);
+}
+
+.dl-paso-control button:disabled {
+  cursor: default;
+  opacity: .35;
+}
+
+.dl-paso-control input {
+  width: 34px;
+  border: 0;
+  background: transparent;
+  color: var(--d-texto);
+  font: 600 15px var(--ac-sans);
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  outline: none;
+  -moz-appearance: textfield;
+}
+
+.dl-pesos input::-webkit-inner-spin-button,
+.dl-paso-control input::-webkit-inner-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+}
+
+.dl-paso-sufijo {
+  margin: 0 4px 0 -4px;
+  color: var(--d-texto-3);
+  font-size: 13px;
+}
+
+.dl-nota {
+  margin: 2px 0 0;
+  color: var(--d-texto-3);
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+.dl-nota strong {
+  color: var(--d-texto);
+}
+
+.dl-calc-resultado {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px;
+  border-radius: 20px;
+  background:
+    radial-gradient(120% 70% at 100% 0%, color-mix(in srgb, var(--s-lima) 18%, transparent), transparent 60%),
+    linear-gradient(160deg, #222, #0E0E0E);
+  color: #FFFFFF;
+}
+
+.dl-calc-resultado ul {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.dl-calc-resultado li {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.dl-calc-resultado li strong {
+  display: block;
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.dl-calc-resultado li small {
+  color: rgba(255, 255, 255, .55);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+
+.dl-calc-resultado li b {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.dl-calc-resultado li.dl-alerta strong {
+  color: #FCA5A5;
+}
+
+.dl-calc-total {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, .12);
+}
+
+.dl-calc-total span {
+  color: rgba(255, 255, 255, .7);
+  font-size: 13px;
+}
+
+.dl-calc-total strong {
+  color: var(--s-lima);
+  font: 600 30px/1 var(--ac-display);
+  letter-spacing: var(--ac-track-titulo);
+  font-variant-numeric: tabular-nums;
+}
+
+.dl-aviso {
+  display: flex;
+  gap: 8px;
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(239, 68, 68, .18);
+  color: #FECACA;
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+
+.dl-aviso svg {
+  flex: none;
+  margin-top: 1px;
+}
+
+.dm--sistema .dl-calc-resultado .dm-btn {
+  align-self: flex-start;
+  background: rgba(255, 255, 255, .1);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14);
+  color: #FFFFFF;
+}
+
+.dm--sistema .dl-calc-resultado .dm-btn:hover {
+  background: rgba(255, 255, 255, .18);
+}
+
+@container (max-width: 600px) {
+  .dl-calc-cuerpo {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------- Jornada por año ---------- */
+
+.dm--sistema .dl-reglas tr.dl-vigente td {
+  background: color-mix(in srgb, var(--s-lima) 20%, rgba(255, 255, 255, .5));
+}
+
+.dm--sistema .dl-reglas tr.dl-vigente td:first-child {
+  border-radius: 12px 0 0 12px;
+}
+
+.dm--sistema .dl-reglas tr.dl-vigente td:last-child {
+  border-radius: 0 12px 12px 0;
+}
+
+.dl-reglas small {
+  color: var(--d-texto-3);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.dl-reglas td {
+  font-variant-numeric: tabular-nums;
+}
+
+.dl-interruptor-fila {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  background: rgba(20, 20, 20, .035);
+}
+
+.dl-interruptor-fila strong {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.dl-interruptor-fila small {
+  color: var(--d-texto-3);
+  font-size: 12.5px;
+}
+
+/* ---------- Calendario de descanso obligatorio ---------- */
+
+.dl-cal {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.dl-cal li {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 12px;
+  border-radius: 16px;
+}
+
+.dl-cal-pasada {
+  opacity: .5;
+}
+
+.dl-cal li.dl-cal-proxima {
+  background: color-mix(in srgb, var(--s-lima) 16%, rgba(255, 255, 255, .7));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--s-lima) 60%, rgba(20, 20, 20, .1));
+}
+
+.dl-cal-fecha {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 52px;
+  border-radius: 14px;
+  background: #FFFFFF;
+  box-shadow: inset 0 0 0 1px rgba(20, 20, 20, .08);
+}
+
+.dl-cal-fecha b {
+  font: 600 20px/1 var(--ac-display);
+}
+
+.dl-cal-fecha small {
+  color: var(--d-texto-3);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.dl-cal-lado {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  text-align: right;
+}
+
+.dl-cal-lado small {
+  color: var(--d-texto-2);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.dl-cal-pie {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.dl-cal-pie .dl-fundamento {
+  margin: 0;
+}
+
+.dl-cal-pie .dm-btn {
+  flex: none;
+}
+
+@container (max-width: 560px) {
+  .dl-cal li {
+    flex-wrap: wrap;
+  }
+
+  .dl-cal-lado {
+    align-items: flex-start;
+    width: 100%;
+    padding-left: 62px;
+    text-align: left;
+  }
+
+  .dl-cal-pie {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+/* ---------- Mapa con geocercas ---------- */
+
+.dl-mapa {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(240px, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.dl-mapa svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 18px;
+  box-shadow: inset 0 0 0 1px rgba(20, 20, 20, .06);
+}
+
+.dl-mapa-fondo {
+  fill: #ECEFE8;
+}
+
+.dl-mapa-calle {
+  stroke: #FFFFFF;
+  stroke-width: 7;
+  stroke-linecap: round;
+}
+
+.dl-mapa-avenida {
+  stroke: #FFFFFF;
+  stroke-width: 13;
+  stroke-linecap: round;
+}
+
+.dl-mapa-rio {
+  fill: none;
+  stroke: #CFE2EE;
+  stroke-width: 14;
+  stroke-linecap: round;
+}
+
+.dl-mapa-parque {
+  fill: #D9E9CB;
+}
+
+.dl-geocerca {
+  fill: color-mix(in srgb, var(--s-lima) 24%, transparent);
+  stroke: color-mix(in srgb, var(--s-lima) 55%, #161616);
+  stroke-dasharray: 5 4;
+  stroke-width: 1.5;
+  transition: r .25s var(--s-ease);
+}
+
+.dl-sucursal {
+  fill: #161616;
+}
+
+.dl-mapa-etq {
+  fill: #161616;
+  font: 600 11px var(--ac-sans);
+  paint-order: stroke;
+  stroke: rgba(255, 255, 255, .92);
+  stroke-width: 3px;
+}
+
+.dl-pin {
+  cursor: pointer;
+  outline: none;
+}
+
+.dl-pin-halo {
+  fill: rgba(20, 20, 20, .14);
+  transition: r .2s var(--s-ease), fill .2s var(--s-ease);
+}
+
+.dl-pin-punto {
+  fill: #161616;
+  stroke: #FFFFFF;
+  stroke-width: 2.5;
+}
+
+.dl-pin--fuera .dl-pin-punto {
+  fill: #DC2626;
+}
+
+.dl-pin--fuera .dl-pin-halo {
+  fill: rgba(220, 38, 38, .2);
+  animation: dl-latir 1.6s ease-in-out infinite;
+}
+
+.dl-pin--elegido .dl-pin-halo {
+  r: 17px;
+  fill: color-mix(in srgb, var(--s-lima) 60%, transparent);
+}
+
+.dl-pin--elegido.dl-pin--fuera .dl-pin-halo {
+  fill: rgba(220, 38, 38, .32);
+}
+
+.dl-pin:focus-visible .dl-pin-halo {
+  stroke: #161616;
+  stroke-width: 2;
+}
+
+@keyframes dl-latir {
+  50% {
+    opacity: .35;
+  }
+}
+
+.dl-mapa-detalle {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, .72);
+  box-shadow: inset 0 0 0 1px rgba(20, 20, 20, .06);
+}
+
+.dl-mapa-detalle-enc {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dl-mapa-detalle-enc strong {
+  display: block;
+  font-size: 15px;
+}
+
+.dl-mapa-detalle-enc small {
+  color: var(--d-texto-3);
+  font-size: 12.5px;
+}
+
+.dl-mapa-detalle .dm-estado {
+  align-self: flex-start;
+}
+
+.dl-mapa-detalle dl {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+
+.dl-mapa-detalle dl div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 13px;
+}
+
+.dl-mapa-detalle dt {
+  color: var(--d-texto-3);
+}
+
+.dl-mapa-detalle dd {
+  margin: 0;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.dl-rango {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(20, 20, 20, .07);
+  color: var(--d-texto-2);
+  font-size: 13px;
+}
+
+.dl-rango input {
+  width: 100%;
+  accent-color: #161616;
+}
+
+@container (max-width: 640px) {
+  .dl-mapa {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------- Revisión de cumplimiento ---------- */
+
+.dl-cumple-resumen {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 8px;
+  padding: 16px;
+  border-radius: 18px;
+  background: rgba(20, 20, 20, .035);
+}
+
+.dl-cumple-medidor {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: var(--d-texto-2);
+  font-size: 13.5px;
+}
+
+.dl-cumple-medidor strong {
+  margin-left: 6px;
+  color: var(--d-texto);
+  font: 600 22px var(--ac-display);
+  letter-spacing: var(--ac-track-subtitulo);
+}
+
+.dl-cumple-medidor small {
+  color: var(--d-texto-3);
+  font-size: 12.5px;
+}
+
+.dl-barra {
+  display: block;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(20, 20, 20, .08);
+  overflow: hidden;
+}
+
+.dl-barra i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #161616, color-mix(in srgb, var(--s-lima) 70%, #161616));
+  transition: width .4s var(--s-ease);
+}
+
+.dl-cumple-cifra {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 124px;
+  padding: 12px 16px;
+  border-radius: 16px;
+  background: #161616;
+  color: #FFFFFF;
+  text-align: center;
+}
+
+.dl-cumple-cifra strong {
+  color: var(--s-lima);
+  font: 600 30px/1 var(--ac-display);
+}
+
+.dl-cumple-cifra small {
+  color: rgba(255, 255, 255, .65);
+  font-size: 12px;
+}
+
+.dl-cumple-lista,
+.dl-reportes,
+.dl-avisos {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.dl-cumple-lista li,
+.dl-reportes li,
+.dl-avisos li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 2px;
+  border-top: 1px solid rgba(20, 20, 20, .06);
+}
+
+.dl-cumple-lista li:first-child,
+.dl-reportes li:first-child,
+.dl-avisos li:first-child {
+  border-top: 0;
+}
+
+.dl-cumple-lista .dm-estado {
+  flex: none;
+  justify-content: center;
+  min-width: 118px;
+}
+
+.dl-cumple-lista .dm-btn {
+  flex: none;
+}
+
+.dl-politicas {
+  margin-top: 10px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: rgba(20, 20, 20, .035);
+}
+
+.dl-politicas h3 {
+  margin: 0 0 10px;
+  color: var(--d-texto-2);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.dl-politicas dl {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px 20px;
+  margin: 0;
+}
+
+.dl-politicas dt {
+  color: var(--d-texto-3);
+  font-size: 12px;
+}
+
+.dl-politicas dd {
+  margin: 2px 0 0;
+  font-size: 13.5px;
+  font-weight: 500;
+}
+
+@container (max-width: 560px) {
+  .dl-cumple-resumen {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .dl-cumple-lista li {
+    flex-wrap: wrap;
+  }
+
+  .dl-cumple-lista .dl-cumple-texto {
+    flex-basis: 100%;
+    order: 2;
+  }
+
+  .dl-cumple-lista .dm-btn {
+    order: 1;
+    margin-left: auto;
+  }
+}
+
+/* ---------- Catálogo de reportes ---------- */
+
+.dl-reportes li.dl-reporte--destacado {
+  margin-bottom: 4px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  background: #161616;
+  color: #FFFFFF;
+}
+
+.dl-reporte--destacado .dl-cumple-texto small {
+  color: rgba(255, 255, 255, .62);
+}
+
+.dm--sistema .dl-reporte--destacado .dm-btn {
+  background: var(--s-lima);
+  box-shadow: none;
+  color: var(--s-lima-texto);
+}
+
+.dl-reporte--destacado + li {
+  border-top: 0;
+}
+
+/* Reporte que el plan no trae: se ve, pero atenuado y con su etiqueta. */
+.dl-reporte--bloqueado .dl-cumple-texto {
+  opacity: 0.55;
+}
+
+.dl-reporte-botones {
+  display: flex;
+  flex: none;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+}
+
+.dm--sistema .dl-reporte-botones .dm-btn {
+  height: 32px;
+  padding: 0 12px;
+  font-size: 12.5px;
+}
+
+@container (max-width: 520px) {
+  .dl-reportes li {
+    flex-wrap: wrap;
+  }
+
+  .dl-reporte-botones {
+    justify-content: flex-start;
+  }
+}
+
+/* ---------- Roles y permisos ---------- */
+
+.dm--sistema .dl-roles th:not(:first-child),
+.dm--sistema .dl-roles td:not(:first-child) {
+  text-align: center;
+}
+
+.dl-si {
+  display: inline-grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #161616;
+  color: var(--s-lima);
+}
+
+.dl-no {
+  color: var(--d-texto-3);
+}
+
+.dl-roles small {
+  color: var(--d-texto-2);
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* ---------- Avisos ---------- */
+
+.dl-avisos .dl-mapa-icono {
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+}
+
+/* ---------- App del empleado ---------- */
+
+.dl-app {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 28px;
+  align-items: center;
+}
+
+.dl-telefono {
+  width: 232px;
+  padding: 9px;
+  border-radius: 38px;
+  background: #0E0E0E;
+  box-shadow: 0 30px 60px -30px rgba(0, 0, 0, .6);
+}
+
+.dl-telefono-pantalla {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 400px;
+  padding: 14px 16px 18px;
+  border-radius: 30px;
+  background:
+    radial-gradient(120% 60% at 100% 0%, color-mix(in srgb, var(--s-lima) 38%, transparent), transparent 60%),
+    #F5F5F2;
+}
+
+.dl-telefono-barra {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.dl-telefono-hola {
+  margin: 10px 0 0;
+  color: var(--d-texto-2);
+  font-size: 13px;
+}
+
+.dl-telefono-hora {
+  margin: 0;
+  font: 600 46px/1 var(--ac-display);
+  letter-spacing: var(--ac-track-titulo);
+}
+
+.dl-telefono-lugar {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 4px;
+  margin: 0;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #E4F4EF;
+  color: #0B655D;
+  font-size: 11.5px;
+  font-weight: 600;
+}
+
+.dl-telefono-boton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 52px;
+  margin-top: 8px;
+  border: 0;
+  border-radius: 18px;
+  background: var(--s-lima);
+  box-shadow: 0 12px 24px -14px color-mix(in srgb, var(--s-lima) 90%, #000);
+  color: var(--s-lima-texto);
+  font: 600 15px var(--ac-sans);
+  cursor: pointer;
+  transition: transform .15s var(--s-ease);
+}
+
+.dl-telefono-boton:active {
+  transform: scale(.97);
+}
+
+.dl-telefono-boton--salida {
+  background: #161616;
+  color: #FFFFFF;
+}
+
+.dl-telefono-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 4px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.dl-telefono-lista li {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 9px 12px;
+  border-radius: 14px;
+  background: #FFFFFF;
+  font-size: 12.5px;
+  font-weight: 500;
+}
+
+.dl-telefono-lista small {
+  color: var(--d-texto-3);
+}
+
+.dl-app-texto h2 {
+  margin: 0 0 12px;
+  font: 600 22px var(--ac-display);
+  letter-spacing: var(--ac-track-subtitulo);
+}
+
+.dl-app-texto ul {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--d-texto-2);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+@container (max-width: 560px) {
+  .dl-app {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+  }
+}
+
+/* ---------- Ventana angosta (menú de iconos) y demo completa en celular ---------- */
+
+@media (max-width: 820px) {
+  .lc-nav-grupo {
+    padding: 8px 8px 4px;
+  }
+
+  .lc-nav-grupo span {
+    display: none;
+  }
+
+  .lc-nav-grupo::before {
+    content: "";
+    display: block;
+    height: 1px;
+    background: rgba(255, 255, 255, .12);
+  }
+}
+
+@media (max-width: 960px) {
+  .dm-nav-grupo {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lc-nav-item--nueva,
+  .dl-pin--fuera .dl-pin-halo {
+    animation: none;
+  }
+}
+
+/* ============================================================
+   Desplazamiento de las demos (ventana de /control, vista previa
+   del configurador y /demo/control) y piezas de "dónde marca
+   cada quien" (mapa con zonas de trabajo y reglas por persona).
+   ============================================================ */
+
+/* ---------- Barras de desplazamiento finas y discretas ---------- */
+
+.lc-lienzo.dm,
+.dm--sistema .dm-principal {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(20, 20, 20, .22) transparent;
+}
+
+.lc-lienzo.dm::-webkit-scrollbar,
+.dm--sistema .dm-principal::-webkit-scrollbar {
+  width: 12px;
+}
+
+.lc-lienzo.dm::-webkit-scrollbar-thumb,
+.dm--sistema .dm-principal::-webkit-scrollbar-thumb {
+  border: 4px solid transparent;
+  border-radius: 999px;
+  background: rgba(20, 20, 20, .2);
+  background-clip: padding-box;
+}
+
+.lc-lienzo.dm::-webkit-scrollbar-thumb:hover,
+.dm--sistema .dm-principal::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(20, 20, 20, .38);
+}
+
+.lc-lienzo.dm::-webkit-scrollbar-track,
+.dm--sistema .dm-principal::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Menús oscuros: la barra solo aparece al pasar el cursor; el borde se desvanece
+   para indicar que hay más secciones. */
+.lc-nav {
+  padding-block: 2px 22px;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 10px, #000 calc(100% - 26px), transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 10px, #000 calc(100% - 26px), transparent 100%);
+  scroll-behavior: smooth;
+}
+
+.lc-nav:hover {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, .2) transparent;
+}
+
+/* ---------- Ventanas de demostración con lienzo que se desliza ---------- */
+
+.lc-lienzo.dm {
+  scroll-behavior: smooth;
+}
+
+/* /control: la ventana tiene alto fijo, así la página no salta al cambiar de función. */
+.lc-demo-ventana .lc-lienzo.dm {
+  height: clamp(520px, 74vh, 800px);
+  min-height: 0;
+  overflow-y: auto;
+}
+
+/* Desvanecido abajo: avisa que el lienzo sigue (solo en ventanas que se deslizan). */
+.lc-demo-ventana .lc-lienzo.dm::after,
+.cs-vista-ventana .lc-lienzo.dm::after {
+  content: "";
+  position: sticky;
+  bottom: 0;
+  z-index: 3;
+  display: block;
+  height: 40px;
+  margin-top: -40px;
+  background: linear-gradient(to bottom, rgba(243, 243, 243, 0), rgba(243, 243, 243, .96));
+  pointer-events: none;
+}
+
+.lc-demo-ventana .lc-lienzo-grid,
+.cs-vista-ventana .lc-lienzo-grid {
+  padding-bottom: 44px;
+}
+
+@media (max-width: 600px) {
+  .lc-demo-ventana .lc-lienzo.dm {
+    height: 72vh;
+    height: 72dvh;
+  }
+}
+
+/* ---------- /demo/control en escritorio: como una aplicación ----------
+   El menú queda fijo a la izquierda y el lienzo redondeado se desliza por
+   dentro, con su barra superior de vidrio siempre a la vista. */
+
+@media (min-width: 961px) {
+  .dm--sistema:not(.lc-lienzo) {
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  .dm--sistema .dm-lateral {
+    min-height: 0;
+  }
+
+  .dm--sistema .dm-nav {
+    flex: 1;
+    min-height: 0;
+    padding-block: 2px 26px;
+    scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 10px, #000 calc(100% - 30px), transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0, #000 10px, #000 calc(100% - 30px), transparent 100%);
+  }
+
+  .dm--sistema .dm-nav:hover {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, .2) transparent;
+  }
+
+  .dm--sistema .dm-principal {
+    height: calc(100vh - 20px);
+    height: calc(100dvh - 20px);
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}
+
+/* En celular el menú es una fila que se desliza: bordes desvanecidos y la
+   sección elegida se acomoda al centro. */
+@media (max-width: 960px) {
+  .dm--sistema .dm-nav {
+    padding-inline: 4px 24px;
+    scroll-padding-inline: 32px;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(to right, transparent 0, #000 14px, #000 calc(100% - 30px), transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0, #000 14px, #000 calc(100% - 30px), transparent 100%);
+  }
+
+  .dm--sistema .dm-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .dm--sistema .dm-nav-item {
+    flex: none;
+    scroll-snap-align: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lc-nav,
+  .lc-lienzo.dm {
+    scroll-behavior: auto;
+  }
+}
+
+/* ---------- Mapa: cifras, zonas de trabajo, leyenda y lista ---------- */
+
+.dl-cuentas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.dl-cuentas span {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(20, 20, 20, .05);
+  color: var(--d-texto-2);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.dl-cuentas b {
+  color: var(--d-texto);
+  font-size: 15px;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+
+.dl-cuentas .dl-cuentas-alerta {
+  background: #FDE8E7;
+  color: #B3261E;
+}
+
+.dl-cuentas .dl-cuentas-alerta b {
+  color: #B3261E;
+}
+
+.dl-mapa {
+  grid-template-columns: minmax(0, 1.5fr) minmax(270px, 1fr);
+}
+
+.dl-mapa-lienzo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.dl-lugar--zona .dl-geocerca {
+  fill: rgba(124, 92, 250, .14);
+  stroke: #7C5CFA;
+  stroke-dasharray: 3 4;
+}
+
+.dl-lugar--zona .dl-sucursal {
+  fill: #5B32D6;
+}
+
+.dl-pin--libre .dl-pin-punto {
+  fill: #5B32D6;
+}
+
+.dl-pin--libre .dl-pin-halo {
+  fill: rgba(91, 50, 214, .16);
+}
+
+.dl-pin--elegido.dl-pin--libre .dl-pin-halo {
+  fill: rgba(91, 50, 214, .3);
+}
+
+.dl-leyenda {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin: 0;
+  color: var(--d-texto-3);
+  font-size: 12px;
+}
+
+.dl-leyenda span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dl-leyenda i {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+}
+
+.dl-ley-sucursal {
+  border-radius: 3px;
+  background: #161616;
+}
+
+.dl-ley-zona {
+  border: 1.5px dashed #7C5CFA;
+  border-radius: 50%;
+  background: rgba(124, 92, 250, .16);
+}
+
+.dl-ley-libre {
+  border-radius: 50%;
+  background: #5B32D6;
+}
+
+.dl-ley-fuera {
+  border-radius: 50%;
+  background: #DC2626;
+}
+
+.dl-mapa-lado {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.dl-marcajes,
+.dl-reglas-lista {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.dl-marcajes {
+  gap: 2px;
+  padding: 6px;
+  border-radius: 18px;
+  background: rgba(20, 20, 20, .035);
+}
+
+.dl-marcajes button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px;
+  border: 0;
+  border-radius: 13px;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color .2s var(--s-ease);
+}
+
+.dl-marcajes button:hover {
+  background: rgba(255, 255, 255, .7);
+}
+
+.dl-marcajes button[aria-pressed="true"] {
+  background: #FFFFFF;
+  box-shadow: 0 0 0 1px rgba(20, 20, 20, .06), 0 6px 14px -10px rgba(20, 20, 20, .3);
+}
+
+.dl-marcajes .dm-estado {
+  flex: none;
+}
+
+.dl-marcaje-avatar {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #161616;
+  color: var(--s-lima);
+  font-size: 11px;
+  font-weight: 650;
+}
+
+/* Regla de una persona: dónde puede marcar (+ zona o fecha de regreso). */
+.dl-regla {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.dl-regla-campo {
+  display: flex;
+  flex: 1 1 160px;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  color: var(--d-texto-3);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.dl-regla-campo select {
+  width: 100%;
+  min-height: 38px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 12px;
+  background: #FFFFFF;
+  box-shadow: inset 0 0 0 1px rgba(20, 20, 20, .12);
+  color: var(--d-texto);
+  font: 500 13.5px var(--ac-sans);
+  cursor: pointer;
+}
+
+.dl-regla-campo select:focus {
+  outline: none;
+  box-shadow: inset 0 0 0 1.5px #161616, 0 0 0 3px rgba(20, 20, 20, .08);
+}
+
+.dl-regla--compacta {
+  flex: 1 1 260px;
+}
+
+.dl-reglas-lista li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  padding: 12px 2px;
+  border-top: 1px solid rgba(20, 20, 20, .06);
+}
+
+.dl-reglas-lista li:first-child {
+  border-top: 0;
+}
+
+.dl-reglas-lista .dl-cal-texto {
+  flex: 1 1 170px;
+}
+
+.dl-regla-hoy {
+  display: flex;
+  flex: 1 1 200px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.dl-regla-hoy small {
+  color: var(--d-texto-3);
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+@container (max-width: 640px) {
+  .dl-mapa {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Con la franja de la ruta de trabajo arriba (solo antes del lanzamiento),
+   la demo completa descuenta su alto para que nada quede fuera de la pantalla. */
+@media (min-width: 961px) {
+  body:has(.lz-previa) .dm--sistema:not(.lc-lienzo) {
+    height: calc(100dvh - 37px);
+  }
+
+  body:has(.lz-previa) .dm--sistema .dm-lateral {
+    height: calc(100dvh - 37px);
+  }
+
+  body:has(.lz-previa) .dm--sistema .dm-principal {
+    height: calc(100dvh - 57px);
+  }
+}
+
+/* El mapa se queda a la vista mientras se recorre la lista de marcajes. */
+.dm--sistema:not(.lc-lienzo) .dl-mapa-lienzo {
+  position: sticky;
+  top: 140px;
+  align-self: start;
+}
+
+@container (max-width: 640px) {
+  .dm--sistema:not(.lc-lienzo) .dl-mapa-lienzo {
+    position: static;
+  }
+}
+
+/* Reglas por persona: más espacio para los nombres de las opciones. */
+.dl-regla--compacta {
+  flex: 1.5 1 340px;
+}
+
+.dl-regla--compacta .dl-regla-campo:first-child {
+  flex: 1.3 1 200px;
+}
+
+.dl-regla--compacta .dl-regla-campo + .dl-regla-campo {
+  flex: 1 1 140px;
+}
+
+/* Etiqueta de complemento en el menú (Ubicación y geocercas: "Extra"). */
+.lc-nav-etiqueta,
+.dm-nav-etiqueta {
+  margin-left: auto;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--s-lima, #D4FF3F) 18%, transparent);
+  color: var(--s-lima, #D4FF3F);
+  font-size: 10.5px;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: .02em;
+}
+
+.lc-nav-etiqueta {
+  color: var(--lc-lima);
+  background: color-mix(in srgb, var(--lc-lima) 18%, transparent);
+}
+
+.lc-nav-item[aria-current="page"] .lc-nav-etiqueta,
+.dm--sistema .dm-nav-item[aria-current="page"] .dm-nav-etiqueta {
+  margin-right: 14px;
+}
+
+.lc-app--contraida .lc-nav-etiqueta {
+  display: none;
+}
+
+@media (max-width: 820px) {
+  .lc-nav-etiqueta {
+    display: none;
+  }
+}
+
+/* "Mi jornada": qué es ese panel. */
+.dm-reloj-ayuda {
+  margin: -4px 0 6px;
+  color: var(--d-texto-3);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+/* Reloj de jornada en un bloque angosto (vista previa del configurador):
+   una columna para que la hora no se encime con "Mis marcajes de hoy". */
+@container (max-width: 640px) {
+  .dm--sistema .dm-reloj {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .dm--sistema .dm-reloj-hora {
+    font-size: 48px;
+  }
+}
+
+/* «En camino»: lo que la demo muestra y aún no se entrega. */
+.dm-en-camino {
+  margin: 0;
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: 1px dashed color-mix(in srgb, var(--d-texto, #141414) 22%, transparent);
+  background: color-mix(in srgb, var(--s-lima, #D4FF3F) 14%, transparent);
+  color: var(--d-texto, #141414);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.dm-en-camino--chico {
+  margin-bottom: 12px;
+  padding: 8px 12px;
+  font-size: 13px;
+}

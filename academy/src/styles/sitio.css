@@ -1,0 +1,1356 @@
+/* ============================================================
+   AvantCode Academy · sitio público
+   Portado del sitio avantcodeapp.com (rama version-2027, estilo
+   Mobbin): página blanca con esquinas redondeadas sobre el pie
+   oscuro, barra pegajosa con blur, títulos Inter Tight con la
+   segunda mitad apagada, botones en píldora y mosaicos grises.
+   Todas las clases llevan el prefijo `ac-`.
+   ============================================================ */
+
+.ac-sitio {
+  --ac-ancho: 1100px;
+  --ac-ancho-amplio: 1240px;
+  --ac-margen: clamp(16px, 4vw, 40px);
+  --ac-nav: 72px;
+  --ac-radio-sm: 12px;
+  --ac-radio: 20px;
+  --ac-radio-lg: 28px;
+  --ac-radio-xl: 40px;
+  --ac-sombra: 0 1px 2px rgba(0, 0, 0, .04), 0 10px 30px rgba(0, 0, 0, .06);
+  --ac-sombra-lg: 0 2px 4px rgba(0, 0, 0, .04), 0 24px 60px rgba(0, 0, 0, .10);
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--ac-negro);
+  color: var(--ac-texto);
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+/* ---------- Estructura ---------- */
+
+.ac-pagina {
+  position: relative;
+  z-index: 1;
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  background: var(--ac-blanco);
+  border-radius: 0 0 var(--ac-radio-xl) var(--ac-radio-xl);
+  overflow: clip;
+}
+
+.ac-pagina > main {
+  flex: 1 0 auto;
+}
+
+.ac-contenedor {
+  width: 100%;
+  max-width: calc(var(--ac-ancho) + var(--ac-margen) * 2);
+  margin-inline: auto;
+  padding-inline: var(--ac-margen);
+}
+
+.ac-contenedor--amplio {
+  max-width: calc(var(--ac-ancho-amplio) + var(--ac-margen) * 2);
+}
+
+.ac-seccion {
+  padding-block: clamp(64px, 9vw, 120px);
+  scroll-margin-top: var(--ac-nav);
+}
+
+.ac-seccion--gris {
+  background: var(--ac-gris-100);
+}
+
+.ac-centro {
+  text-align: center;
+}
+
+.ac-centro .ac-sub {
+  margin-inline: auto;
+}
+
+/* ---------- Tipografía ---------- */
+
+.ac-titulo-xl,
+.ac-titulo,
+.ac-titulo-md {
+  color: var(--ac-texto);
+  font-family: var(--ac-display);
+  font-weight: 600;
+  text-wrap: balance;
+}
+
+.ac-titulo-xl {
+  font-size: clamp(2.5rem, 6.2vw, 5rem);
+  line-height: 1.02;
+  letter-spacing: -.045em;
+}
+
+.ac-titulo {
+  font-size: clamp(2rem, 4.2vw, 3.25rem);
+  line-height: 1.06;
+  letter-spacing: -.04em;
+}
+
+.ac-titulo-md {
+  font-size: clamp(1.4rem, 2.4vw, 1.8rem);
+  line-height: 1.15;
+  letter-spacing: -.03em;
+}
+
+.ac-apagado {
+  color: var(--ac-texto-3);
+}
+
+.ac-sub {
+  max-width: 640px;
+  color: var(--ac-texto-3);
+  font-size: clamp(1.02rem, 1.5vw, 1.18rem);
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+.ac-texto {
+  color: var(--ac-texto-2);
+  line-height: 1.65;
+}
+
+.ac-etiqueta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px 6px 8px;
+  border-radius: 999px;
+  background: var(--ac-gris-100);
+  color: var(--ac-texto-2);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  text-decoration: none;
+  transition: background-color .2s var(--ac-ease);
+}
+
+a.ac-etiqueta:hover {
+  background: var(--ac-gris-150);
+}
+
+.ac-nuevo {
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--ac-negro);
+  color: var(--ac-lima);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* ---------- Botones ---------- */
+
+.ac-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  font: 600 15px/1 var(--ac-sans);
+  letter-spacing: -.01em;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color .2s var(--ac-ease), color .2s var(--ac-ease), transform .2s var(--ac-ease), opacity .2s;
+}
+
+.ac-btn:active {
+  transform: scale(.98);
+}
+
+.ac-btn:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.ac-btn svg {
+  flex: none;
+  transition: transform .2s var(--ac-ease);
+}
+
+.ac-btn:hover svg:last-child:not(:first-child) {
+  transform: translateX(2px);
+}
+
+.ac-btn--negro {
+  background: var(--ac-negro);
+  color: var(--ac-blanco);
+}
+
+.ac-btn--negro:hover:not(:disabled) {
+  background: #000;
+}
+
+.ac-btn--gris {
+  background: var(--ac-gris-150);
+  color: var(--ac-texto);
+}
+
+.ac-btn--gris:hover:not(:disabled) {
+  background: var(--ac-gris-200);
+}
+
+.ac-btn--blanco {
+  background: var(--ac-blanco);
+  color: var(--ac-texto);
+}
+
+.ac-btn--blanco:hover:not(:disabled) {
+  background: var(--ac-gris-100);
+}
+
+.ac-btn--lima {
+  background: var(--ac-lima);
+  color: var(--ac-negro);
+}
+
+.ac-btn--lima:hover:not(:disabled) {
+  background: #C8F52A;
+}
+
+.ac-btn--grande {
+  min-height: 50px;
+  padding: 0 24px;
+  font-size: 16px;
+}
+
+.ac-btn--chico {
+  min-height: 38px;
+  padding: 0 14px;
+  font-size: 14px;
+}
+
+.ac-btn--bloque {
+  width: 100%;
+}
+
+.ac-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.ac-centro .ac-acciones {
+  justify-content: center;
+}
+
+/* ---------- Mosaicos ---------- */
+
+.ac-tarjeta {
+  border-radius: var(--ac-radio-lg);
+  background: var(--ac-gris-100);
+}
+
+.ac-tarjeta--borde {
+  border: 1px solid var(--ac-gris-200);
+  background: var(--ac-blanco);
+}
+
+/* Ícono tipo "app" con degradado (como los chips del hero del sitio). */
+.ac-chip {
+  display: inline-grid;
+  place-items: center;
+  width: .9em;
+  height: .9em;
+  border-radius: .22em;
+  vertical-align: -.1em;
+  box-shadow: 0 .06em .14em rgba(0, 0, 0, .18), inset 0 0 0 .02em rgba(255, 255, 255, .25);
+}
+
+.ac-chip svg {
+  width: .5em;
+  height: .5em;
+  stroke-width: 2.4;
+}
+
+.ac-chip--1 {
+  background: linear-gradient(145deg, #2A2A2A, #0D0D0D);
+  color: var(--ac-lima);
+  transform: rotate(-6deg);
+}
+
+.ac-chip--2 {
+  background: linear-gradient(145deg, #14A394, #0B655D);
+  color: #fff;
+  transform: rotate(5deg);
+}
+
+.ac-chip--3 {
+  background: linear-gradient(145deg, #A78BFA, #6D3EF0);
+  color: #fff;
+  transform: rotate(-4deg);
+}
+
+/* ---------- Barra de navegación ---------- */
+
+.ac-nav {
+  position: sticky;
+  top: 0;
+  z-index: 900;
+  box-shadow: 0 1px 0 transparent;
+  transition: box-shadow .25s var(--ac-ease);
+}
+
+/* El fondo con blur vive en ::before y no en el header: un elemento con
+   backdrop-filter se vuelve la caja contenedora de sus hijos `position: fixed`,
+   y el menú móvil quedaba aplastado a la altura de la barra (72px). */
+.ac-nav::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgba(255, 255, 255, .86);
+  -webkit-backdrop-filter: saturate(180%) blur(16px);
+  backdrop-filter: saturate(180%) blur(16px);
+  pointer-events: none;
+}
+
+/* Con el menú abierto la barra es sólida, igual que el panel. */
+.ac-nav--abierta::before {
+  background: var(--ac-blanco);
+}
+
+.ac-nav--sombra {
+  box-shadow: 0 1px 0 var(--ac-gris-200);
+}
+
+.ac-nav-in {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  height: var(--ac-nav);
+}
+
+.ac-nav-marca {
+  flex: none;
+  text-decoration: none;
+}
+
+.ac-nav-enlaces {
+  display: flex;
+  gap: 4px;
+}
+
+.ac-nav-enlaces a {
+  padding: 8px 12px;
+  border-radius: 999px;
+  color: var(--ac-texto);
+  font-size: 15px;
+  font-weight: 500;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: background-color .2s var(--ac-ease);
+}
+
+.ac-nav-enlaces a:hover,
+.ac-nav-enlaces a.active {
+  background: var(--ac-gris-100);
+}
+
+.ac-nav-derecha {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+}
+
+.ac-nav-acceso {
+  color: var(--ac-texto);
+  font-size: 15px;
+  font-weight: 500;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.ac-nav-cta {
+  white-space: nowrap;
+}
+
+.ac-nav-acceso:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.ac-nav-menu {
+  display: none;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--ac-gris-100);
+  color: var(--ac-texto);
+  cursor: pointer;
+}
+
+/* Menú de la cuenta (sólido: dentro de la barra con blur un vidrio no difumina). */
+.ac-cuenta {
+  position: relative;
+}
+
+.ac-cuenta-boton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 10px 4px 4px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ac-texto);
+  font: 600 14px/1 var(--ac-sans);
+  cursor: pointer;
+  transition: background-color .2s var(--ac-ease);
+}
+
+.ac-cuenta-boton:hover,
+.ac-cuenta-boton[aria-expanded="true"] {
+  background: var(--ac-gris-100);
+}
+
+.ac-cuenta-panel {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 260px;
+  padding: 8px;
+  border-radius: 22px;
+  background: var(--ac-blanco);
+  box-shadow: 0 0 0 1px rgba(20, 20, 20, .06), var(--ac-sombra-lg);
+  animation: escalar .2s var(--ac-ease) both;
+}
+
+.ac-cuenta-panel a,
+.ac-cuenta-panel button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 14px;
+  background: transparent;
+  color: var(--ac-texto);
+  font: 500 14px/1.2 var(--ac-sans);
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.ac-cuenta-panel a:hover,
+.ac-cuenta-panel button:hover {
+  background: var(--ac-gris-100);
+}
+
+.ac-cuenta-panel .ac-peligro {
+  color: #B3261E;
+}
+
+/* Menú móvil */
+.ac-menu-movil {
+  position: fixed;
+  inset: var(--ac-nav) 0 0;
+  z-index: 899;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 16px var(--ac-margen) calc(32px + env(safe-area-inset-bottom, 0px));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--ac-blanco);
+  animation: ac-menu-entra .25s var(--ac-ease) both;
+}
+
+/* Alumno con sesión: su nombre y correo arriba de los enlaces del menú. */
+.ac-menu-movil-alumno {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 0 16px;
+  border-bottom: 1px solid var(--ac-gris-150);
+}
+
+.ac-menu-movil[hidden] {
+  display: none;
+}
+
+.ac-menu-movil nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.ac-menu-movil nav a {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--ac-gris-150);
+  color: var(--ac-texto);
+  font-family: var(--ac-display);
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -.03em;
+  text-decoration: none;
+}
+
+.ac-menu-movil-acciones {
+  display: grid;
+  gap: 10px;
+}
+
+@keyframes ac-menu-entra {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+/* Desde 960px los enlaces, "Mi panel" y el menú de la cuenta ya no caben en
+   una línea (sobre todo con sesión): se pasa al menú. */
+@media (max-width: 960px) {
+  .ac-nav-enlaces,
+  .ac-nav-acceso,
+  .ac-nav-cta {
+    display: none;
+  }
+
+  .ac-nav-menu {
+    display: grid;
+  }
+}
+
+@media (min-width: 961px) {
+  .ac-menu-movil {
+    display: none !important;
+  }
+}
+
+/* En celular el menú de la cuenta no cabe junto al logo; sus opciones
+   están dentro del menú móvil. */
+@media (max-width: 560px) {
+  .ac-nav-derecha .ac-cuenta {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .ac-nav-in {
+    gap: 16px;
+  }
+
+  .ac-menu-movil nav a {
+    padding: 12px 0;
+    font-size: 24px;
+  }
+}
+
+/* ---------- Pie oscuro (la página blanca termina encima, redondeada) ---------- */
+
+.ac-pie {
+  position: relative;
+  margin-top: calc(var(--ac-radio-xl) * -1);
+  padding: calc(var(--ac-radio-xl) + 64px) 0 36px;
+  background: var(--ac-negro);
+  color: rgba(255, 255, 255, .62);
+  font-size: 15px;
+}
+
+.ac-pie-grid {
+  display: grid;
+  grid-template-columns: 1.6fr repeat(3, 1fr);
+  gap: 40px 32px;
+}
+
+.ac-pie-marca p {
+  margin: 18px 0 22px;
+  max-width: 28ch;
+}
+
+.ac-pie-titulo {
+  margin: 0 0 16px;
+  color: var(--ac-blanco);
+  font-family: var(--ac-sans);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.ac-pie ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ac-pie li {
+  padding: 5px 0;
+}
+
+.ac-pie a {
+  color: rgba(255, 255, 255, .62);
+  text-decoration: none;
+  transition: color .2s var(--ac-ease);
+}
+
+.ac-pie a:hover {
+  color: var(--ac-blanco);
+}
+
+.ac-pie .ac-pie-redes {
+  display: flex;
+  gap: 8px;
+}
+
+.ac-pie .ac-pie-redes li {
+  padding: 0;
+}
+
+.ac-pie-redes a {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--ac-negro-2);
+  color: var(--ac-blanco);
+}
+
+.ac-pie-redes a:hover {
+  background: #333;
+}
+
+.ac-pie-base {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px 24px;
+  margin-top: 56px;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255, 255, 255, .1);
+  font-size: 13px;
+}
+
+.ac-pie :focus-visible {
+  outline-color: var(--ac-blanco);
+}
+
+@media (max-width: 900px) {
+  .ac-pie-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ac-pie-marca {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 480px) {
+  .ac-pie-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------- Hero de la portada ---------- */
+
+.ac-hero {
+  padding: clamp(48px, 8vw, 104px) 0 clamp(40px, 6vw, 64px);
+}
+
+.ac-hero-titulo {
+  max-width: 15ch;
+  margin: 26px auto 0;
+}
+
+.ac-hero-sub {
+  margin: 26px auto 34px;
+}
+
+/* Vitrina: mosaico gris con la "ventana" del reproductor de cursos. */
+.ac-vitrina {
+  position: relative;
+  height: clamp(420px, 52vw, 640px);
+  padding: clamp(18px, 3.2vw, 40px) clamp(18px, 3.2vw, 40px) 0;
+  overflow: hidden;
+  border-radius: var(--ac-radio-xl);
+  background: var(--ac-gris-100);
+  isolation: isolate;
+}
+
+.ac-vitrina::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(420px 320px at 88% 4%, rgba(212, 255, 63, .45), transparent 70%),
+    radial-gradient(460px 380px at 0% 100%, rgba(167, 139, 250, .35), transparent 70%);
+}
+
+.ac-ventana {
+  display: grid;
+  grid-template-columns: 290px 1fr;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 22px 22px 0 0;
+  background: var(--ac-blanco);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, .04), var(--ac-sombra-lg);
+}
+
+.ac-ventana-lateral {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 18px 14px;
+  border-right: 1px solid var(--ac-gris-150);
+  text-align: left;
+}
+
+.ac-ventana-puntos {
+  display: flex;
+  gap: 6px;
+  margin: 0 4px 16px;
+}
+
+.ac-ventana-puntos i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--ac-gris-200);
+}
+
+.ac-ventana-modulo {
+  margin: 12px 8px 6px;
+  color: var(--ac-texto-3);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+.ac-ventana-leccion {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 10px;
+  border-radius: 12px;
+  color: var(--ac-texto-2);
+  font-size: 13.5px;
+}
+
+.ac-ventana-leccion--activa {
+  background: var(--ac-gris-100);
+  color: var(--ac-texto);
+  font-weight: 600;
+}
+
+.ac-ventana-check {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--ac-negro);
+  color: var(--ac-lima);
+}
+
+.ac-ventana-check--vacio {
+  background: transparent;
+  box-shadow: inset 0 0 0 1.5px var(--ac-gris-300);
+}
+
+.ac-ventana-principal {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 22px;
+  min-width: 0;
+  text-align: left;
+}
+
+.ac-ventana-video {
+  position: relative;
+  display: grid;
+  flex: 1;
+  place-items: center;
+  min-height: 160px;
+  border-radius: 18px;
+  background:
+    radial-gradient(60% 80% at 80% 10%, rgba(212, 255, 63, .28), transparent 60%),
+    radial-gradient(60% 80% at 10% 100%, rgba(167, 139, 250, .35), transparent 60%),
+    linear-gradient(160deg, #262626, #0E0E0E);
+}
+
+/* La portada del curso detrás del botón de reproducir. */
+.ac-ventana-poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  opacity: .92;
+}
+
+.ac-ventana-play {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .14);
+  color: var(--ac-blanco);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .25);
+}
+
+.ac-ventana-barra {
+  height: 6px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--ac-gris-150);
+}
+
+.ac-ventana-barra i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--ac-negro);
+}
+
+/* Tarjetas de vidrio flotando sobre la vitrina. */
+.ac-flotante {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px 12px 12px;
+  border-radius: 20px;
+  text-align: left;
+}
+
+.ac-flotante--cert {
+  right: clamp(12px, 4vw, 64px);
+  bottom: clamp(18px, 6vw, 72px);
+}
+
+.ac-flotante--progreso {
+  left: clamp(12px, 4vw, 64px);
+  bottom: clamp(18px, 3vw, 36px);
+}
+
+@media (max-width: 860px) {
+  .ac-ventana {
+    grid-template-columns: 1fr;
+  }
+
+  .ac-ventana-lateral {
+    display: none;
+  }
+
+  .ac-flotante--progreso {
+    display: none;
+  }
+
+  /* En celular el certificado va arriba del video, no sobre la barra de avance. */
+  .ac-flotante--cert {
+    top: clamp(12px, 4vw, 28px);
+    bottom: auto;
+    right: 12px;
+    transform: scale(.86);
+    transform-origin: top right;
+  }
+}
+
+/* ---------- Pasos "Cómo funciona" ---------- */
+
+.ac-pasos {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
+  margin: 48px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ac-pasos li {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 48px;
+  min-height: 230px;
+  padding: 24px;
+  border-radius: var(--ac-radio-lg);
+  background: var(--ac-blanco);
+  text-align: left;
+}
+
+.ac-paso-num {
+  font-family: var(--ac-display);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ac-texto-3);
+}
+
+.ac-pasos h3 {
+  margin: 0 0 8px;
+  font-family: var(--ac-display);
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -.025em;
+}
+
+.ac-pasos p {
+  margin: 0;
+  color: var(--ac-texto-3);
+  font-size: 14.5px;
+}
+
+@media (max-width: 1080px) {
+  .ac-pasos {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .ac-pasos {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ac-pasos li {
+    min-height: 0;
+    gap: 20px;
+  }
+}
+
+/* ---------- Mosaico de beneficios ---------- */
+
+.ac-mosaico {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 48px;
+}
+
+.ac-celda {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 330px;
+  overflow: hidden;
+  border-radius: var(--ac-radio-lg);
+  background: var(--ac-gris-100);
+  text-align: center;
+  transition: background-color .25s var(--ac-ease);
+}
+
+.ac-celda:hover {
+  background: var(--ac-gris-150);
+}
+
+.ac-celda h3 {
+  margin: 28px 20px 0;
+  font-family: var(--ac-display);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -.02em;
+}
+
+.ac-celda p {
+  margin: 6px 24px 0;
+  color: var(--ac-texto-3);
+  font-size: 14.5px;
+}
+
+.ac-celda-visual {
+  display: flex;
+  flex: 1;
+  align-items: flex-end;
+  justify-content: center;
+  width: 100%;
+  margin-top: 22px;
+  transition: transform .4s var(--ac-ease);
+}
+
+.ac-celda:hover .ac-celda-visual {
+  transform: translateY(-4px);
+}
+
+.ac-celda-panel {
+  width: 80%;
+  padding: 18px;
+  border-radius: 18px 18px 0 0;
+  background: var(--ac-blanco);
+  box-shadow: var(--ac-sombra);
+  text-align: left;
+}
+
+@media (max-width: 900px) {
+  .ac-mosaico {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ac-celda {
+    height: 300px;
+  }
+}
+
+/* ---------- Tarjeta de curso ---------- */
+
+.ac-curso {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: var(--ac-radio-lg, 28px);
+  background: var(--ac-gris-100);
+  color: var(--ac-texto);
+  text-decoration: none;
+  transition: background-color .25s var(--ac-ease), transform .3s var(--ac-ease), box-shadow .3s var(--ac-ease);
+}
+
+.ac-curso:hover {
+  background: var(--ac-gris-150);
+  transform: translateY(-3px);
+}
+
+.ac-curso-portada {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  margin: 10px 10px 0;
+  overflow: hidden;
+  border-radius: 20px;
+  background:
+    radial-gradient(70% 90% at 85% 0%, rgba(212, 255, 63, .35), transparent 60%),
+    radial-gradient(70% 90% at 0% 100%, rgba(167, 139, 250, .4), transparent 60%),
+    linear-gradient(160deg, #262626, #0E0E0E);
+}
+
+.ac-curso-portada img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .5s var(--ac-ease);
+}
+
+.ac-curso:hover .ac-curso-portada img {
+  transform: scale(1.03);
+}
+
+.ac-curso-insignias {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ac-curso-cuerpo {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 20px 20px;
+}
+
+.ac-curso-titulo {
+  margin: 0;
+  font-family: var(--ac-display);
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -.02em;
+}
+
+.ac-curso-resumen {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  color: var(--ac-texto-3);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.ac-curso-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  color: var(--ac-texto-3);
+  font-size: 13px;
+}
+
+.ac-curso-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.ac-curso-pie {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid rgba(20, 20, 20, .07);
+}
+
+.ac-precio {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  font-family: var(--ac-sans);
+  font-weight: 700;
+  letter-spacing: -.02em;
+}
+
+.ac-precio s {
+  color: var(--ac-texto-3);
+  font-size: .78em;
+  font-weight: 500;
+}
+
+/* Esqueleto de carga */
+.ac-esqueleto {
+  border-radius: var(--ac-radio-lg, 28px);
+  background: linear-gradient(90deg, var(--ac-gris-100) 0%, var(--ac-gris-150) 50%, var(--ac-gris-100) 100%);
+  background-size: 200% 100%;
+  animation: ac-brillo 1.4s ease-in-out infinite;
+}
+
+@keyframes ac-brillo {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+/* ---------- Catálogo ---------- */
+
+.ac-filtros {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.ac-campo-busqueda {
+  position: relative;
+  flex: 1 1 280px;
+}
+
+.ac-campo-busqueda svg {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  color: var(--ac-texto-3);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.ac-campo-busqueda input,
+.ac-selector {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid var(--ac-gris-200);
+  border-radius: 999px;
+  background: var(--ac-blanco);
+  color: var(--ac-texto);
+  font: 400 15px/1.2 var(--ac-sans);
+  transition: border-color .2s var(--ac-ease), box-shadow .2s var(--ac-ease);
+}
+
+.ac-campo-busqueda input {
+  padding: 0 18px 0 46px;
+}
+
+.ac-selector {
+  width: auto;
+  padding: 0 40px 0 16px;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B6B6B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  cursor: pointer;
+}
+
+.ac-campo-busqueda input:focus,
+.ac-selector:focus {
+  outline: none;
+  border-color: var(--ac-negro);
+  box-shadow: 0 0 0 4px rgba(20, 20, 20, .07);
+}
+
+.ac-grid-cursos {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+@media (max-width: 1000px) {
+  .ac-grid-cursos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .ac-grid-cursos {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------- Detalle del curso ---------- */
+
+.ac-detalle-hero {
+  padding: clamp(18px, 3vw, 32px);
+  border-radius: var(--ac-radio-xl);
+  background: var(--ac-gris-100);
+}
+
+.ac-detalle-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  align-items: start;
+  gap: 32px;
+}
+
+.ac-compra {
+  position: sticky;
+  top: calc(var(--ac-nav) + 20px);
+}
+
+@media (max-width: 1000px) {
+  .ac-detalle-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .ac-compra {
+    position: static;
+  }
+}
+
+.ac-temario-modulo {
+  overflow: hidden;
+  border-radius: 20px;
+  background: var(--ac-gris-100);
+}
+
+.ac-temario-modulo + .ac-temario-modulo {
+  margin-top: 10px;
+}
+
+.ac-temario-cabecera {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 16px 18px;
+  border: 0;
+  background: transparent;
+  color: var(--ac-texto);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.ac-temario-leccion {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 18px;
+  border-top: 1px solid rgba(20, 20, 20, .06);
+  font-size: 14.5px;
+}
+
+/* Contenido de texto de una lección (sin HTML: saltos de línea respetados). */
+.ac-contenido {
+  color: var(--ac-texto-2);
+  font-size: 15.5px;
+  line-height: 1.7;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+/* Medidor de seguridad de contraseña. */
+.ac-medidor {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.ac-medidor i {
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(20, 20, 20, .08);
+  transition: background-color .25s var(--ac-ease);
+}
+
+/* ---------- Aparición al hacer scroll ---------- */
+
+.ac-revelar {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity .8s var(--ac-ease) var(--retraso, 0ms),
+    transform .8s var(--ac-ease) var(--retraso, 0ms);
+}
+
+.ac-revelar--visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Accesibilidad ---------- */
+
+.ac-sitio :focus-visible {
+  outline: 2px solid var(--ac-negro);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.ac-saltar {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 2000;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: var(--ac-negro);
+  color: var(--ac-blanco);
+  font-weight: 600;
+  text-decoration: none;
+  transform: translateY(-160%);
+  transition: transform .2s var(--ac-ease);
+}
+
+.ac-saltar:focus {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ac-revelar {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
